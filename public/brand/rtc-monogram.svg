@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Temporary RTC monogram">
+  <rect width="128" height="128" rx="16" fill="#070908"/>
+  <path d="M24 84V38h37c10 0 17 6 17 15 0 7-4 12-11 14l14 17H65L52 69H38v15H24Zm14-27h21c4 0 6-2 6-5s-2-5-6-5H38v10Zm43 27 12-46h13L94 84H81Z" fill="#F4F5F1"/>
+  <path d="M20 96h88l8-12H28l-8 12Zm76-64h18l-8 10H88l8-10Z" fill="#36C84B"/>
+</svg>

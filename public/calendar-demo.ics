@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//RaceTrack Competition//Demo Calendar//EN
+BEGIN:VEVENT
+UID:racetrack-demo-paul-ricard-20260918
+DTSTAMP:20260710T120000Z
+DTSTART;VALUE=DATE:20260918
+SUMMARY:RaceTrack Competition Demo - Circuit Paul Ricard
+DESCRIPTION:Demo entry pending team confirmation.
+END:VEVENT
+END:VCALENDAR
