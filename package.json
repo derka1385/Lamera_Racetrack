@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "GITHUB_PAGES=true NEXT_PUBLIC_STATIC_EXPORT=true NEXT_PUBLIC_SITE_URL=https://derka1385.github.io/Lamera_Racetrack next build",
     "typecheck": "tsc --noEmit",
     "start": "next start",
     "lint": "eslint"

@@ -20,6 +20,7 @@ type LeadFormProps = {
 
 export function LeadForm({ dictionary }: LeadFormProps) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === "true";
   const {
     register,
     handleSubmit,
@@ -39,6 +40,32 @@ export function LeadForm({ dictionary }: LeadFormProps) {
 
   async function onSubmit(values: LeadFormInput) {
     setStatus("idle");
+
+    if (isStaticExport) {
+      window.location.assign(`mailto:${process.env.NEXT_PUBLIC_ENQUIRY_EMAIL ?? "contact@racetrack-competition.example"}?subject=${encodeURIComponent(`RaceTrack Competition enquiry - ${values.objective}`)}&body=${encodeURIComponent(
+        [
+          `Name: ${values.firstName} ${values.lastName}`,
+          `Email: ${values.email}`,
+          `Phone / WhatsApp: ${values.phone}`,
+          `Country: ${values.country}`,
+          `Preferred language: ${values.preferredLanguage}`,
+          `Driving experience: ${values.drivingExperience}`,
+          `Racing licence: ${values.racingLicence}`,
+          `Objective: ${values.objective}`,
+          `Preferred circuit: ${values.circuit ?? ""}`,
+          `Preferred dates: ${values.dates ?? ""}`,
+          `Approximate budget: ${values.budget ?? ""}`,
+          `Height: ${values.height ?? ""}`,
+          `Weight: ${values.weight ?? ""}`,
+          "",
+          values.message,
+        ].join("\n"),
+      )}`);
+      setStatus("success");
+      reset();
+      return;
+    }
+
     const response = await fetch("/api/enquiry", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
