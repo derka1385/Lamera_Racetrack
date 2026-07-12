@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getDictionary } from "@/content/dictionaries";
 import { defaultLocale, type Locale, locales } from "@/lib/i18n";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://racetrack-competition.example";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://derka1385.github.io/Lamera_Racetrack";
 
 const pagePaths = {
   home: "",

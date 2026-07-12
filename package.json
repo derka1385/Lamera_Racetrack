@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "build:pages": "GITHUB_PAGES=true NEXT_PUBLIC_STATIC_EXPORT=true NEXT_PUBLIC_SITE_URL=https://derka1385.github.io/Lamera_Racetrack next build",
+    "serve:pages": "node scripts/serve-static-pages.mjs",
+    "test:responsive": "playwright test",
     "typecheck": "tsc --noEmit",
     "start": "next start",
     "lint": "eslint"
@@ -22,6 +24,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

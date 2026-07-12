@@ -3,7 +3,6 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Globe2 } from "lucide-react";
 import {
-  localeLabels,
   locales,
   localizedPath,
   stripLocale,
@@ -13,9 +12,10 @@ import {
 type LanguageSwitcherProps = {
   locale: Locale;
   label: string;
+  onLocaleChange?: () => void;
 };
 
-export function LanguageSwitcher({ locale, label }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ locale, label, onLocaleChange }: LanguageSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -28,13 +28,18 @@ export function LanguageSwitcher({ locale, label }: LanguageSwitcherProps) {
         value={locale}
         onChange={(event) => {
           const nextLocale = event.target.value as Locale;
-          router.push(localizedPath(nextLocale, stripLocale(pathname)));
+          const query = typeof window === "undefined" ? "" : window.location.search;
+          const hash = typeof window === "undefined" ? "" : window.location.hash;
+          router.replace(
+            `${localizedPath(nextLocale, stripLocale(pathname))}${query}${hash}`,
+          );
+          onLocaleChange?.();
         }}
         className="cursor-pointer bg-transparent text-foreground outline-none"
       >
         {locales.map((item) => (
           <option key={item} value={item} className="bg-surface text-foreground">
-            {localeLabels[item]}
+            {item.toUpperCase()}
           </option>
         ))}
       </select>

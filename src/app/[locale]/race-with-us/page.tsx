@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/content/dictionaries";
 import { fullServiceItems, racePath, raceSeats } from "@/data/site";
-import { isLocale, localizedPath, t, type Locale } from "@/lib/i18n";
+import { contactHref, isLocale, t, type Locale } from "@/lib/i18n";
 import { createMetadata } from "@/lib/seo";
 import { priceLabel } from "@/lib/utils";
 import { AvailabilityBadge } from "@/components/AvailabilityBadge";
@@ -22,6 +22,7 @@ export default async function RaceWithUsPage({ params }: PageProps) {
   const locale: Locale = isLocale(localeParam) ? localeParam : "en";
   const dictionary = getDictionary(locale);
   const page = dictionary.pages.raceWithUs;
+  const publicRaceSeats = raceSeats.filter((seat) => !seat.isDemo);
 
   return (
     <>
@@ -29,7 +30,7 @@ export default async function RaceWithUsPage({ params }: PageProps) {
         <div className="page-shell">
           <Breadcrumbs locale={locale} items={[{ label: page.eyebrow }]} />
           <SectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} />
-          <CTAButton href={localizedPath(locale, "/contact")} className="mt-8">{dictionary.common.requestDrive}</CTAButton>
+          <CTAButton href={contactHref(locale, { objective: "race-weekend" })} className="mt-8">{dictionary.common.requestDrive}</CTAButton>
         </div>
       </section>
 
@@ -48,9 +49,10 @@ export default async function RaceWithUsPage({ params }: PageProps) {
 
       <section className="bg-surface py-20">
         <div className="page-shell">
-          <SectionHeading title={dictionary.common.viewSeats} text={dictionary.common.demoData} />
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {raceSeats.map((seat) => (
+          <SectionHeading title={dictionary.common.viewSeats} text={dictionary.common.seatsOnRequest} />
+          {publicRaceSeats.length ? (
+            <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            {publicRaceSeats.map((seat) => (
               <article key={seat.id} className="rounded border border-white/10 bg-black/25 p-6">
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                   <AvailabilityBadge availability={seat.availability} dictionary={dictionary} />
@@ -68,10 +70,18 @@ export default async function RaceWithUsPage({ params }: PageProps) {
                 </dl>
                 <p className="mt-5 text-sm text-muted">{t(seat.licenceRequirements, locale)}</p>
                 <p className="mt-5 font-semibold text-brand">{priceLabel(seat.price, { onRequest: dictionary.common.priceOnRequest, from: dictionary.common.priceFrom })}</p>
-                <CTAButton href={localizedPath(locale, "/contact")} className="mt-5">{dictionary.common.requestDrive}</CTAButton>
+                <CTAButton href={contactHref(locale, { objective: "race-weekend", event: seat.id, circuit: seat.circuit })} className="mt-5">{dictionary.common.requestRaceSeat}</CTAButton>
               </article>
             ))}
-          </div>
+            </div>
+          ) : (
+            <div className="mt-10 rounded border border-white/10 bg-black/25 p-6 md:p-8">
+              <p className="max-w-2xl text-muted">{dictionary.common.seatsOnRequest}</p>
+              <CTAButton href={contactHref(locale, { objective: "race-weekend" })} className="mt-6">
+                {dictionary.common.joinWaitingList}
+              </CTAButton>
+            </div>
+          )}
         </div>
       </section>
 

@@ -8,6 +8,7 @@ type CTAButtonProps = {
   variant?: "primary" | "secondary" | "ghost";
   className?: string;
   icon?: boolean;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 export function CTAButton({
@@ -16,10 +17,12 @@ export function CTAButton({
   variant = "primary",
   className,
   icon = true,
+  onClick,
 }: CTAButtonProps) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={cn(
         "inline-flex min-h-12 items-center justify-center gap-2 rounded px-5 py-3 text-sm font-semibold uppercase text-center",
         "focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-brand",

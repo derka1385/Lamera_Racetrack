@@ -1,8 +1,20 @@
 import Link from "next/link";
+import Script from "next/script";
 
 export default function RootPage() {
   return (
     <main className="grid min-h-dvh place-items-center px-4 text-center">
+      <Script id="root-language-redirect" strategy="afterInteractive">
+        {`
+          try {
+            var saved = window.localStorage.getItem("rtc-locale");
+            var locale = /^(en|fr|de)$/.test(saved || "") ? saved : "en";
+            window.location.replace("./" + locale + "/");
+          } catch (error) {
+            window.location.replace("./en/");
+          }
+        `}
+      </Script>
       <div className="max-w-xl">
         <p className="text-sm font-semibold uppercase text-brand">
           RaceTrack Competition
@@ -11,7 +23,7 @@ export default function RootPage() {
           Private Testing. Endurance Racing.
         </h1>
         <p className="mt-5 text-muted">
-          Choose a language to enter the showcase website.
+          Redirecting to the English website. Choose another language if needed.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link

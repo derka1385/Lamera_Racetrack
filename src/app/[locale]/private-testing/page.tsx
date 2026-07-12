@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { getDictionary } from "@/content/dictionaries";
 import { audienceProfiles, includedItems, privateTestFormats, privateTestingFaqs } from "@/data/site";
-import { isLocale, localizedPath, t, type Locale } from "@/lib/i18n";
+import { contactHref, isLocale, t, type Locale } from "@/lib/i18n";
 import { breadcrumbJsonLd, createMetadata } from "@/lib/seo";
 import { priceLabel } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -30,7 +30,7 @@ export default async function PrivateTestingPage({ params }: PageProps) {
         <div className="page-shell">
           <Breadcrumbs locale={locale} items={[{ label: page.eyebrow }]} />
           <SectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} />
-          <CTAButton href={localizedPath(locale, "/contact")} className="mt-8">{dictionary.common.requestPrivateTest}</CTAButton>
+          <CTAButton href={contactHref(locale, { objective: "private-test" })} className="mt-8">{dictionary.common.requestPrivateTest}</CTAButton>
         </div>
       </section>
 
@@ -66,7 +66,7 @@ export default async function PrivateTestingPage({ params }: PageProps) {
                 <p className="mt-6 font-semibold text-brand">
                   {priceLabel(format.price, { onRequest: dictionary.common.priceOnRequest, from: dictionary.common.priceFrom })}
                 </p>
-                <CTAButton href={localizedPath(locale, "/contact")} variant="secondary" className="mt-5">{t(format.cta, locale)}</CTAButton>
+                <CTAButton href={contactHref(locale, { objective: "private-test", programme: format.id })} variant="secondary" className="mt-5">{t(format.cta, locale)}</CTAButton>
               </article>
             ))}
           </div>

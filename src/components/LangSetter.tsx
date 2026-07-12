@@ -6,6 +6,7 @@ import type { Locale } from "@/lib/i18n";
 export function LangSetter({ locale }: { locale: Locale }) {
   useEffect(() => {
     document.documentElement.lang = locale;
+    window.localStorage.setItem("rtc-locale", locale);
   }, [locale]);
 
   return null;

@@ -10,13 +10,10 @@ import {
   proofStats,
   services,
   teamMembers,
-  testimonials,
-  timeline,
 } from "@/data/site";
-import { isLocale, localizedPath, t, type Locale } from "@/lib/i18n";
+import { contactHref, isLocale, localizedPath, t, type Locale } from "@/lib/i18n";
 import { createMetadata, organizationJsonLd } from "@/lib/seo";
 import { CarSpecification } from "@/components/CarSpecification";
-import { CircuitCard } from "@/components/CircuitCard";
 import { CTAButton } from "@/components/CTAButton";
 import { Hero } from "@/components/Hero";
 import { MediaFrame } from "@/components/MediaFrame";
@@ -27,7 +24,6 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ServiceItem } from "@/components/ServiceItem";
 import { TeamMemberCard } from "@/components/TeamMemberCard";
-import { TestimonialCard } from "@/components/TestimonialCard";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -42,6 +38,7 @@ export default async function HomePage({ params }: PageProps) {
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : "en";
   const dictionary = getDictionary(locale);
+  const publicCircuits = circuits.filter((circuit) => !circuit.isDemo).slice(0, 3);
 
   return (
     <>
@@ -119,7 +116,7 @@ export default async function HomePage({ params }: PageProps) {
               <ServiceItem key={`${item.icon}-${t(item.title, locale)}`} item={item} locale={locale} />
             ))}
           </div>
-          <CTAButton href={localizedPath(locale, "/contact")} className="mt-10">
+          <CTAButton href={contactHref(locale, { objective: "full-season" })} className="mt-10">
             {dictionary.common.buildProgramme}
           </CTAButton>
         </div>
@@ -139,38 +136,30 @@ export default async function HomePage({ params }: PageProps) {
       <section className="py-24">
         <div className="page-shell">
           <SectionHeading title={dictionary.home.circuitsTitle} text={dictionary.home.circuitsText} />
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {circuits.slice(0, 6).map((circuit) => (
-              <CircuitCard key={circuit.id} circuit={circuit} locale={locale} dictionary={dictionary} />
-            ))}
-          </div>
-          <CTAButton href={localizedPath(locale, "/calendar")} className="mt-10">
-            {dictionary.common.viewCalendar}
-          </CTAButton>
+          {publicCircuits.length ? (
+            <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {publicCircuits.map((circuit) => (
+                <article key={circuit.id} className="rounded border border-white/10 bg-surface p-6">
+                  <h3 className="font-display text-3xl font-semibold uppercase">{circuit.circuit}</h3>
+                  <p className="mt-3 text-muted">{t(circuit.country, locale)}</p>
+                  <CTAButton href={contactHref(locale, { objective: "private-test", circuit: circuit.id })} variant="ghost" className="mt-5 justify-start px-0">
+                    {dictionary.common.enquireAboutCircuit}
+                  </CTAButton>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-12 rounded border border-white/10 bg-surface p-6 md:p-8">
+              <p className="max-w-2xl text-lg text-muted">{dictionary.common.privateDatesOnRequest}</p>
+              <CTAButton href={contactHref(locale, { objective: "private-test" })} className="mt-6">
+                {dictionary.common.discussPreferredCircuit}
+              </CTAButton>
+            </div>
+          )}
         </div>
       </section>
 
       <section className="bg-surface py-24">
-        <div className="page-shell">
-          <SectionHeading title={dictionary.home.heritageTitle} text={dictionary.home.heritageText} />
-          <div className="mt-12 grid gap-4">
-            {timeline.map((item, index) => (
-              <article key={`${item.year ?? "today"}-${t(item.title, locale)}`} className="grid gap-4 rounded border border-white/10 bg-black/25 p-5 md:grid-cols-[8rem_1fr]">
-                <p className="font-display text-4xl font-semibold text-brand">{item.year ?? String(index + 1).padStart(2, "0")}</p>
-                <div>
-                  <h3 className="font-display text-3xl font-semibold uppercase">{t(item.title, locale)}</h3>
-                  <p className="mt-2 text-muted">{t(item.copy, locale)}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-          <CTAButton href={localizedPath(locale, "/results")} className="mt-10">
-            {dictionary.common.readMore}
-          </CTAButton>
-        </div>
-      </section>
-
-      <section className="py-24">
         <div className="page-shell">
           <SectionHeading title={dictionary.home.teamTitle} text={dictionary.home.teamText} />
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -181,24 +170,6 @@ export default async function HomePage({ params }: PageProps) {
           <CTAButton href={localizedPath(locale, "/team")} className="mt-10">
             {dictionary.common.meetTeam}
           </CTAButton>
-        </div>
-      </section>
-
-      <section className="bg-black py-24">
-        <div className="page-shell">
-          <SectionHeading
-            title="Testimonials"
-            text="Demo testimonials are separated from verified production reviews."
-          />
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {testimonials.map((testimonial) => (
-              <TestimonialCard
-                key={testimonial.initials}
-                testimonial={testimonial}
-                locale={locale}
-              />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -223,7 +194,7 @@ export default async function HomePage({ params }: PageProps) {
         <div className="page-shell relative z-10 max-w-3xl">
           <h2 className="display-type text-5xl uppercase md:text-7xl">{dictionary.home.finalCtaTitle}</h2>
           <p className="mt-5 text-xl leading-8 text-muted">{dictionary.home.finalCtaText}</p>
-          <CTAButton href={localizedPath(locale, "/contact")} className="mt-8">
+          <CTAButton href={contactHref(locale, { objective: "full-season" })} className="mt-8">
             {dictionary.common.confidentialCall}
           </CTAButton>
           <p className="mt-5 text-sm text-muted">{dictionary.home.finalCtaSmall}</p>

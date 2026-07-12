@@ -6,13 +6,19 @@ type BreadcrumbsProps = {
   items: Array<{ label: string; href?: string }>;
 };
 
+const homeLabels: Record<Locale, string> = {
+  en: "Home",
+  fr: "Accueil",
+  de: "Startseite",
+};
+
 export function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb" className="text-sm text-muted">
       <ol className="flex flex-wrap items-center gap-2">
         <li>
           <Link href={localizedPath(locale)} className="hover:text-brand">
-            RaceTrack Competition
+            {homeLabels[locale]}
           </Link>
         </li>
         {items.map((item) => (

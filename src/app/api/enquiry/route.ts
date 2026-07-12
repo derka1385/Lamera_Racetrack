@@ -20,14 +20,20 @@ export async function POST(request: Request) {
   const emailProviderKey = process.env.RESEND_API_KEY;
 
   if (!recipient || !emailProviderKey) {
-    return NextResponse.json({
-      ok: true,
-      mode: "development-fallback",
-    });
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "ENQUIRY_RECIPIENT_EMAIL and RESEND_API_KEY must be configured before accepting enquiries.",
+      },
+      { status: 503 },
+    );
   }
 
-  return NextResponse.json({
-    ok: true,
-    mode: "email-provider-ready",
-  });
+  return NextResponse.json(
+    {
+      ok: false,
+      error: "Email delivery provider is not implemented in this static-first project. Use NEXT_PUBLIC_ENQUIRY_ENDPOINT for production.",
+    },
+    { status: 501 },
+  );
 }

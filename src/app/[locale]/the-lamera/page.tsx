@@ -20,6 +20,32 @@ export default async function LameraPage({ params }: PageProps) {
   const locale: Locale = isLocale(localeParam) ? localeParam : "en";
   const dictionary = getDictionary(locale);
   const page = dictionary.pages.lamera;
+  const detailBlocks = [
+    {
+      title: { en: "Cockpit details", fr: "Détails cockpit", de: "Cockpit-Details" },
+      copy: {
+        en: "The cockpit is presented as part of the driver briefing, fitting and safety process before any track session.",
+        fr: "Le cockpit est présenté lors du briefing, de l'installation pilote et du processus sécurité avant toute session.",
+        de: "Das Cockpit wird im Rahmen von Briefing, Sitzprobe und Sicherheitsablauf vor jeder Session erklärt.",
+      },
+    },
+    {
+      title: { en: "Engineering details", fr: "Détails ingénierie", de: "Engineering-Details" },
+      copy: {
+        en: "Technical specifications are confirmed during the proposal stage according to the car configuration available for the programme.",
+        fr: "Les spécifications techniques sont confirmées lors de la proposition selon la configuration disponible pour le programme.",
+        de: "Technische Daten werden im Angebot je nach verfügbarer Fahrzeugkonfiguration bestätigt.",
+      },
+    },
+    {
+      title: { en: "Endurance suitability", fr: "Adaptée à l'endurance", de: "Für Langstrecke geeignet" },
+      copy: {
+        en: "The Lamera platform supports progressive learning, shared-driver formats and long-session preparation.",
+        fr: "La plateforme Lamera accompagne la progression, les formats à plusieurs pilotes et la préparation des longs relais.",
+        de: "Die Lamera-Plattform unterstützt progressive Entwicklung, Mehrfahrer-Formate und lange Stints.",
+      },
+    },
+  ];
 
   return (
     <>
@@ -68,11 +94,11 @@ export default async function LameraPage({ params }: PageProps) {
 
       <section className="py-20">
         <div className="page-shell grid gap-8 lg:grid-cols-3">
-          {["Cockpit details", "Engineering details", "Endurance suitability"].map((title) => (
-            <article key={title} className="rounded border border-white/10 bg-surface p-6">
-              <h2 className="font-display text-3xl font-semibold uppercase">{title}</h2>
+          {detailBlocks.map((item) => (
+            <article key={t(item.title, locale)} className="rounded border border-white/10 bg-surface p-6">
+              <h2 className="font-display text-3xl font-semibold uppercase">{t(item.title, locale)}</h2>
               <p className="mt-4 leading-7 text-muted">
-                Content structure prepared for verified technical notes, safety information, learning context and race-format explanation.
+                {t(item.copy, locale)}
               </p>
             </article>
           ))}

@@ -28,12 +28,46 @@ export function localizedPath(locale: Locale, href = "") {
   return `/${locale}${href.startsWith("/") ? href : `/${href}`}`;
 }
 
+export function localizedHref(
+  locale: Locale,
+  href = "",
+  params?: Record<string, string | number | boolean | null | undefined>,
+) {
+  const path = localizedPath(locale, href);
+  const search = new URLSearchParams();
+
+  Object.entries(params ?? {}).forEach(([key, value]) => {
+    if (value !== null && value !== undefined && value !== "") {
+      search.set(key, String(value));
+    }
+  });
+
+  const query = search.toString();
+  return query ? `${path}?${query}` : path;
+}
+
+export function contactHref(
+  locale: Locale,
+  params?: Record<string, string | number | boolean | null | undefined>,
+) {
+  return localizedHref(locale, "/contact", params);
+}
+
 export function stripLocale(pathname: string) {
   const parts = pathname.split("/");
   if (isLocale(parts[1])) {
     const stripped = `/${parts.slice(2).join("/")}`;
-    return stripped === "/" ? "" : stripped;
+    const normalized = stripped.length > 1 ? stripped.replace(/\/$/, "") : stripped;
+    return normalized === "/" ? "" : normalized;
   }
 
-  return pathname;
+  return pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+}
+
+export function formatDate(date: string, locale: Locale) {
+  return new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(`${date}T12:00:00Z`));
 }

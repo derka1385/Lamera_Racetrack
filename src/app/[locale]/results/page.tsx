@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/content/dictionaries";
+import { raceResults } from "@/data/site";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { createMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -10,7 +11,18 @@ type PageProps = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  return createMetadata(isLocale(locale) ? locale : "en", "results");
+  const metadata = createMetadata(isLocale(locale) ? locale : "en", "results");
+  const hasVerifiedResults = raceResults.some((result) => result.verified);
+
+  return hasVerifiedResults
+    ? metadata
+    : {
+        ...metadata,
+        robots: {
+          index: false,
+          follow: true,
+        },
+      };
 }
 
 export default async function ResultsPage({ params }: PageProps) {
@@ -29,7 +41,7 @@ export default async function ResultsPage({ params }: PageProps) {
       </section>
       <section className="py-20">
         <div className="page-shell">
-          <ResultsFilters locale={locale} />
+          <ResultsFilters locale={locale} dictionary={dictionary} />
         </div>
       </section>
     </>

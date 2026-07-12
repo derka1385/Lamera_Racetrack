@@ -31,7 +31,7 @@ export const dictionaries = {
       calendar: {
         title: "Calendar & Availability",
         description:
-          "Editable demo calendar for private Lamera testing and arrive-and-drive race weekends across Europe.",
+          "Private Lamera testing and arrive-and-drive race weekend availability across Europe.",
       },
       results: {
         title: "Results Archive",
@@ -62,6 +62,9 @@ export const dictionaries = {
     common: {
       requestDrive: "Request a Drive",
       requestPrivateTest: "Request a Private Test",
+      requestRaceSeat: "Request this race seat",
+      enquireAboutCircuit: "Enquire about this circuit",
+      joinWaitingList: "Join the waiting list",
       exploreTeam: "Explore the Team",
       exploreProgrammes: "Explore the Programmes",
       viewCalendar: "View the Calendar",
@@ -73,8 +76,18 @@ export const dictionaries = {
       viewSeats: "View Available Seats",
       planTest: "Plan Your Test",
       readMore: "Read more",
+      all: "All",
       based: "Based in Luxembourg. Racing across Europe.",
-      demoData: "Demo data pending team confirmation",
+      demoData: "Internal validation required",
+      privateDatesOnRequest: "Private test dates are arranged on request.",
+      discussPreferredCircuit: "Discuss your preferred circuit",
+      seatsOnRequest: "Seats are opened only after team confirmation.",
+      verifiedResultsPending: "Verified results are being prepared with official sources before public publication.",
+      contactDetails: "Direct contact",
+      contactDetailsMissing: "Direct email, phone and WhatsApp details still need to be configured by the team.",
+      directEmail: "Email",
+      whatsapp: "WhatsApp",
+      languagesSpoken: "Languages spoken",
       priceOnRequest: "Price on request",
       priceFrom: "Programmes from",
       skip: "Skip to main content",
@@ -170,8 +183,8 @@ export const dictionaries = {
         eyebrow: "Calendar",
         title: "Plan your next test or race weekend.",
         intro:
-          "These entries are editable demo content until RaceTrack Competition confirms the live calendar and seat availability.",
-        export: "Download demo .ics",
+          "Confirmed calendar entries will appear here. Private test dates are arranged directly with the team.",
+        export: "Download .ics",
       },
       results: {
         eyebrow: "Results",
@@ -205,12 +218,17 @@ export const dictionaries = {
       weight: "Weight",
       message: "Message",
       consent: "I agree that RaceTrack Competition may use my details to respond to this enquiry.",
-      submit: "Send Request",
+      submit: "Send my request",
       sending: "Sending...",
+      sent: "Request sent",
       success:
         "Thank you. Your request has been received. A member of RaceTrack Competition will contact you personally.",
       failure:
-        "The request could not be sent. Please check the highlighted fields and try again.",
+        "The request could not be sent. Your details are still in the form, so you can try again.",
+      missingEndpoint:
+        "The enquiry endpoint is not configured yet. The form cannot confirm delivery until NEXT_PUBLIC_ENQUIRY_ENDPOINT is connected.",
+      fallback:
+        "If this continues, use a direct contact option below once configured.",
       required: "This field is required.",
       invalidEmail: "Enter a valid email address.",
       consentRequired: "Please confirm the privacy consent.",
@@ -277,6 +295,9 @@ export const dictionaries = {
     common: {
       requestDrive: "Demander un roulage",
       requestPrivateTest: "Demander un essai privé",
+      requestRaceSeat: "Demander ce baquet",
+      enquireAboutCircuit: "Demander ce circuit",
+      joinWaitingList: "Rejoindre la liste d'attente",
       exploreTeam: "Découvrir l'équipe",
       exploreProgrammes: "Voir les programmes",
       viewCalendar: "Voir le calendrier",
@@ -288,8 +309,18 @@ export const dictionaries = {
       viewSeats: "Voir les baquets",
       planTest: "Planifier votre essai",
       readMore: "Lire la suite",
+      all: "Tous",
       based: "Basée au Luxembourg. En course à travers l'Europe.",
-      demoData: "Données de démonstration à confirmer",
+      demoData: "Validation interne requise",
+      privateDatesOnRequest: "Les dates d'essais privés sont organisées sur demande.",
+      discussPreferredCircuit: "Discuter de votre circuit préféré",
+      seatsOnRequest: "Les baquets sont ouverts uniquement après confirmation de l'équipe.",
+      verifiedResultsPending: "Les résultats vérifiés sont préparés avec des sources officielles avant publication.",
+      contactDetails: "Contact direct",
+      contactDetailsMissing: "L'e-mail direct, le téléphone et WhatsApp doivent encore être configurés par l'équipe.",
+      directEmail: "E-mail",
+      whatsapp: "WhatsApp",
+      languagesSpoken: "Langues parlées",
       priceOnRequest: "Prix sur demande",
       priceFrom: "Programmes à partir de",
       skip: "Aller au contenu principal",
@@ -385,8 +416,8 @@ export const dictionaries = {
         eyebrow: "Calendrier",
         title: "Planifiez votre prochain essai ou week-end de course.",
         intro:
-          "Ces entrées sont des données de démonstration jusqu'à confirmation du calendrier et des disponibilités.",
-        export: "Télécharger le .ics démo",
+          "Les dates confirmées apparaîtront ici. Les essais privés sont organisés directement avec l'équipe.",
+        export: "Télécharger le .ics",
       },
       results: {
         eyebrow: "Résultats",
@@ -420,12 +451,17 @@ export const dictionaries = {
       weight: "Poids",
       message: "Message",
       consent: "J'accepte que RaceTrack Competition utilise mes coordonnées pour répondre à cette demande.",
-      submit: "Envoyer la demande",
+      submit: "Envoyer ma demande",
       sending: "Envoi...",
+      sent: "Demande envoyée",
       success:
         "Merci. Votre demande a bien été reçue. Un membre de RaceTrack Competition vous contactera personnellement.",
       failure:
-        "La demande n'a pas pu être envoyée. Vérifiez les champs indiqués puis réessayez.",
+        "La demande n'a pas pu être envoyée. Vos informations restent dans le formulaire pour réessayer.",
+      missingEndpoint:
+        "L'endpoint de demande n'est pas encore configuré. Le formulaire ne peut pas confirmer l'envoi tant que NEXT_PUBLIC_ENQUIRY_ENDPOINT n'est pas connecté.",
+      fallback:
+        "Si le problème persiste, utilisez une option de contact direct ci-dessous une fois configurée.",
       required: "Ce champ est obligatoire.",
       invalidEmail: "Saisissez une adresse email valide.",
       consentRequired: "Veuillez confirmer le consentement confidentialité.",
@@ -461,7 +497,7 @@ export const dictionaries = {
       calendar: {
         title: "Kalender & Verfügbarkeit",
         description:
-          "Bearbeitbarer Demo-Kalender für private Lamera-Tests und Arrive-and-Drive-Rennwochenenden in Europa.",
+          "Private Lamera-Tests und Arrive-and-Drive-Rennwochenenden in Europa nach Verfügbarkeit.",
       },
       results: {
         title: "Ergebnisarchiv",
@@ -492,6 +528,9 @@ export const dictionaries = {
     common: {
       requestDrive: "Fahrt anfragen",
       requestPrivateTest: "Privaten Test anfragen",
+      requestRaceSeat: "Diesen Race Seat anfragen",
+      enquireAboutCircuit: "Diese Strecke anfragen",
+      joinWaitingList: "Warteliste anfragen",
       exploreTeam: "Team entdecken",
       exploreProgrammes: "Programme ansehen",
       viewCalendar: "Kalender ansehen",
@@ -503,8 +542,18 @@ export const dictionaries = {
       viewSeats: "Verfügbare Seats ansehen",
       planTest: "Test planen",
       readMore: "Mehr erfahren",
+      all: "Alle",
       based: "Sitz in Luxemburg. Rennen in ganz Europa.",
-      demoData: "Demo-Daten, Bestätigung erforderlich",
+      demoData: "Interne Prüfung erforderlich",
+      privateDatesOnRequest: "Private Testtermine werden auf Anfrage vereinbart.",
+      discussPreferredCircuit: "Bevorzugte Strecke besprechen",
+      seatsOnRequest: "Race Seats werden erst nach Bestätigung des Teams geöffnet.",
+      verifiedResultsPending: "Verifizierte Ergebnisse werden vor Veröffentlichung mit offiziellen Quellen vorbereitet.",
+      contactDetails: "Direkter Kontakt",
+      contactDetailsMissing: "Direkte E-Mail, Telefon und WhatsApp müssen vom Team noch konfiguriert werden.",
+      directEmail: "E-Mail",
+      whatsapp: "WhatsApp",
+      languagesSpoken: "Gesprochene Sprachen",
       priceOnRequest: "Preis auf Anfrage",
       priceFrom: "Programme ab",
       skip: "Zum Inhalt springen",
@@ -600,8 +649,8 @@ export const dictionaries = {
         eyebrow: "Kalender",
         title: "Planen Sie Ihren nächsten Test oder Renneinsatz.",
         intro:
-          "Diese Einträge sind Demo-Inhalte, bis Kalender und Verfügbarkeit von RaceTrack Competition bestätigt sind.",
-        export: "Demo-.ics herunterladen",
+          "Bestätigte Termine erscheinen hier. Private Tests werden direkt mit dem Team abgestimmt.",
+        export: ".ics herunterladen",
       },
       results: {
         eyebrow: "Ergebnisse",
@@ -635,12 +684,17 @@ export const dictionaries = {
       weight: "Gewicht",
       message: "Nachricht",
       consent: "Ich stimme zu, dass RaceTrack Competition meine Angaben zur Beantwortung dieser Anfrage verwenden darf.",
-      submit: "Anfrage senden",
+      submit: "Meine Anfrage senden",
       sending: "Wird gesendet...",
+      sent: "Anfrage gesendet",
       success:
         "Vielen Dank. Ihre Anfrage wurde erhalten. Ein Mitglied von RaceTrack Competition wird Sie persönlich kontaktieren.",
       failure:
-        "Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie die markierten Felder und versuchen Sie es erneut.",
+        "Die Anfrage konnte nicht gesendet werden. Ihre Angaben bleiben im Formular, damit Sie es erneut versuchen können.",
+      missingEndpoint:
+        "Der Anfrage-Endpunkt ist noch nicht konfiguriert. Das Formular kann die Zustellung erst bestätigen, wenn NEXT_PUBLIC_ENQUIRY_ENDPOINT verbunden ist.",
+      fallback:
+        "Falls das Problem bestehen bleibt, nutzen Sie eine direkte Kontaktoption unten, sobald diese konfiguriert ist.",
       required: "Dieses Feld ist erforderlich.",
       invalidEmail: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
       consentRequired: "Bitte bestätigen Sie die Datenschutz-Zustimmung.",

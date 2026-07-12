@@ -11,6 +11,7 @@ The current site uses the supplied logo plus abstract generated placeholders. No
 
 - `public/brand/rtc-monogram.svg` is a temporary RTC monogram for favicon/mobile use, not an official redesign.
 - Generated abstract `.webp` placeholders are used so pages remain visually polished without inventing fake team photographs.
+- Placeholder media must not be used as proof of a specific event, podium, availability or race result.
 
 ## Hero Video
 

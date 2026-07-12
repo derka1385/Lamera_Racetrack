@@ -30,14 +30,16 @@ Important claims are centralized in `src/data/site.ts` and `src/content/dictiona
 - Testimonials
 - Permission to use championship and partner logos
 
-## Provisional Claims Currently Used
+## Claims Not Public Until Verified
+
+The following claims remain in internal validation notes or non-public data until official wording and sources are supplied:
 
 - FIA ETCC Champion 2014
 - FIA ETCC Vice-Champion 2013
 - 26H Portimão Pro-Am Winner 2023
 - Abu Dhabi class podium 2022
-- 15+ Years of Motorsport Experience
-- Luxembourg-Based European Team
+- Exact number of years of motorsport experience
+- Exact public role labels for team members
 
 ## Lamera Technical Claims
 
@@ -55,4 +57,20 @@ Do not add unverified safety certification claims.
 
 ## Demo Data
 
-The calendar, race seats, testimonials and result stories include demo/provisional records. Confirm and update the status fields before production.
+The calendar, race seats, testimonials and result stories include demo/provisional records for structure only. Public components must hide:
+
+- `isDemo: true`
+- `isVerified: false`
+- `verified: false`
+
+Confirm and update the status fields before publishing dates, seats, testimonials or results.
+
+## Enquiry Configuration
+
+Production lead capture requires:
+
+- `NEXT_PUBLIC_ENQUIRY_ENDPOINT`
+- optional `NEXT_PUBLIC_DIRECT_EMAIL`
+- optional `NEXT_PUBLIC_WHATSAPP_URL`
+
+Do not publish a form success state unless the endpoint returns HTTP 2xx.

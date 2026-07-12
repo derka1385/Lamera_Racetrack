@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/content/dictionaries";
 import type { CalendarEvent } from "@/types/content";
-import { localizedPath, t, type Locale } from "@/lib/i18n";
+import { formatDate, localizedPath, t, type Locale } from "@/lib/i18n";
 import { AvailabilityBadge } from "@/components/AvailabilityBadge";
 import { CTAButton } from "@/components/CTAButton";
 import { MediaFrame } from "@/components/MediaFrame";
@@ -21,7 +21,7 @@ export function EventCard({ event, locale, dictionary }: EventCardProps) {
           <span className="text-sm text-muted">{dictionary.common.eventTypes[event.type]}</span>
         </div>
         <h3 className="font-display text-3xl font-semibold uppercase">{event.circuit}</h3>
-        <p className="mt-2 text-sm text-muted">{event.date} / {t(event.country, locale)}</p>
+        <p className="mt-2 text-sm text-muted">{formatDate(event.date, locale)} / {t(event.country, locale)}</p>
       </div>
       <CTAButton href={localizedPath(locale, event.href)} variant="secondary">
         {t(event.cta, locale)}

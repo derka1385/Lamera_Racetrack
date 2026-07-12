@@ -1,10 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, LoaderCircle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import type { Dictionary } from "@/content/dictionaries";
+import type { Locale } from "@/lib/i18n";
 import {
   budgetOptions,
   drivingExperienceOptions,
@@ -16,11 +18,89 @@ import {
 
 type LeadFormProps = {
   dictionary: Dictionary;
+  locale: Locale;
 };
 
-export function LeadForm({ dictionary }: LeadFormProps) {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === "true";
+type SubmissionStatus = "idle" | "success" | "error" | "configuration";
+
+const objectiveByParam: Record<string, LeadFormInput["objective"]> = {
+  "first-test": "First race car test",
+  "private-test": "Private test day",
+  "private-testing": "Private test day",
+  coaching: "Driver development",
+  "driver-development": "Driver development",
+  "race-weekend": "Race weekend",
+  "race-seat": "Race weekend",
+  "full-season": "Full season",
+  corporate: "Corporate or VIP event",
+  vip: "Corporate or VIP event",
+};
+
+const circuitByParam: Record<string, string> = {
+  "paul-ricard": "Circuit Paul Ricard",
+  "magny-cours": "Magny-Cours",
+  portimao: "Portimão",
+  "dijon-prenois": "Dijon-Prenois",
+  dijon: "Dijon-Prenois",
+  zolder: "Zolder",
+  aragon: "MotorLand Aragón",
+  mugello: "Mugello",
+};
+
+const preferredLanguageByLocale: Record<Locale, LeadFormInput["preferredLanguage"]> = {
+  en: "English",
+  fr: "French",
+  de: "German",
+};
+
+function getInitialValues(locale: Locale, params: URLSearchParams): LeadFormInput {
+  const objectiveParam = params.get("objective") ?? "";
+  const circuitParam = params.get("circuit") ?? "";
+  const eventParam = params.get("event") ?? "";
+  const programmeParam = params.get("programme") ?? "";
+  const messageLines = [
+    eventParam ? `Event: ${eventParam}` : "",
+    programmeParam ? `Programme: ${programmeParam}` : "",
+  ].filter(Boolean);
+
+  return {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    country: "",
+    preferredLanguage: preferredLanguageByLocale[locale],
+    drivingExperience: "Track-day experience",
+    racingLicence: "",
+    objective: objectiveByParam[objectiveParam] ?? "Private test day",
+    circuit: circuitByParam[circuitParam] ?? circuitParam,
+    dates: params.get("dates") ?? "",
+    budget: "",
+    height: "",
+    weight: "",
+    message: messageLines.join("\n"),
+    privacyConsent: false,
+    companyWebsite: "",
+  };
+}
+
+function trackingParams(params: URLSearchParams) {
+  return Object.fromEntries(
+    Array.from(params.entries()).filter(([key]) => key.startsWith("utm_")),
+  );
+}
+
+export function LeadForm({ dictionary, locale }: LeadFormProps) {
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const paramsKey = searchParams.toString();
+  const params = useMemo(() => new URLSearchParams(paramsKey), [paramsKey]);
+  const endpoint = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT?.trim();
+  const directEmail = process.env.NEXT_PUBLIC_DIRECT_EMAIL?.trim();
+  const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL?.trim();
+  const initialValues = useMemo(() => getInitialValues(locale, params), [locale, params]);
+
   const {
     register,
     handleSubmit,
@@ -28,70 +108,81 @@ export function LeadForm({ dictionary }: LeadFormProps) {
     reset,
   } = useForm<LeadFormInput>({
     resolver: zodResolver(leadSchema),
-    defaultValues: {
-      preferredLanguage: "English",
-      drivingExperience: "Track-day experience",
-      objective: "Private test day",
-      budget: "",
-      privacyConsent: false,
-      companyWebsite: "",
-    },
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    reset(initialValues, { keepDirtyValues: true, keepErrors: true });
+  }, [initialValues, reset]);
 
   async function onSubmit(values: LeadFormInput) {
     setStatus("idle");
 
-    if (isStaticExport) {
-      window.location.assign(`mailto:${process.env.NEXT_PUBLIC_ENQUIRY_EMAIL ?? "contact@racetrack-competition.example"}?subject=${encodeURIComponent(`RaceTrack Competition enquiry - ${values.objective}`)}&body=${encodeURIComponent(
-        [
-          `Name: ${values.firstName} ${values.lastName}`,
-          `Email: ${values.email}`,
-          `Phone / WhatsApp: ${values.phone}`,
-          `Country: ${values.country}`,
-          `Preferred language: ${values.preferredLanguage}`,
-          `Driving experience: ${values.drivingExperience}`,
-          `Racing licence: ${values.racingLicence}`,
-          `Objective: ${values.objective}`,
-          `Preferred circuit: ${values.circuit ?? ""}`,
-          `Preferred dates: ${values.dates ?? ""}`,
-          `Approximate budget: ${values.budget ?? ""}`,
-          `Height: ${values.height ?? ""}`,
-          `Weight: ${values.weight ?? ""}`,
-          "",
-          values.message,
-        ].join("\n"),
-      )}`);
+    if (values.companyWebsite) {
+      return;
+    }
+
+    if (!endpoint) {
+      setStatus("configuration");
+      return;
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...values,
+          technical: {
+            locale,
+            originPage: pathname,
+            fullUrl: window.location.href,
+            requestedAt: new Date().toISOString(),
+            utm: trackingParams(params),
+            requestedObjective: params.get("objective") ?? "",
+            requestedProgramme: params.get("programme") ?? "",
+            requestedCircuit: params.get("circuit") ?? "",
+            requestedEvent: params.get("event") ?? "",
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        setStatus("error");
+        return;
+      }
+
       setStatus("success");
-      reset();
-      return;
-    }
-
-    const response = await fetch("/api/enquiry", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-
-    if (!response.ok) {
+      reset(getInitialValues(locale, params));
+    } catch {
       setStatus("error");
-      return;
     }
-
-    setStatus("success");
-    reset();
   }
 
   const inputClass =
-    "min-h-12 rounded border border-white/12 bg-black/35 px-3 text-foreground outline-none focus:border-brand";
-  const labelClass = "grid gap-2 text-sm font-medium text-foreground";
+    "min-h-12 min-w-0 rounded border border-white/12 bg-black/35 px-3 text-foreground outline-none focus:border-brand";
+  const labelClass = "grid min-w-0 gap-2 text-sm font-medium text-foreground";
   const errorClass = "text-sm text-[var(--color-warning)]";
+  const showFallback = status === "error" || status === "configuration";
 
   return (
     <form
+      data-lead-form
       onSubmit={handleSubmit(onSubmit)}
       className="rounded border border-white/10 bg-surface p-5 shadow-[var(--shadow-elevated)] md:p-8"
       noValidate
     >
+      <input type="hidden" name="locale" value={locale} readOnly />
+      <input type="hidden" name="originPage" value={pathname} readOnly />
+      <input type="hidden" name="utm" value={JSON.stringify(trackingParams(params))} readOnly />
+      <input type="hidden" name="requestedObjective" value={params.get("objective") ?? ""} readOnly />
+      <input type="hidden" name="requestedCircuit" value={params.get("circuit") ?? ""} readOnly />
+      <input type="hidden" name="requestedProgramme" value={params.get("programme") ?? ""} readOnly />
+      <input type="hidden" name="requestedEvent" value={params.get("event") ?? ""} readOnly />
+
       <div className="grid gap-5 md:grid-cols-2">
         <label className={labelClass}>
           {dictionary.form.firstName}
@@ -205,24 +296,41 @@ export function LeadForm({ dictionary }: LeadFormProps) {
 
       <div aria-live="polite" className="mt-5">
         {status === "success" ? (
-          <p className="rounded border border-brand/30 bg-brand/10 p-4 text-sm text-brand">
+          <p className="flex items-start gap-3 rounded border border-brand/30 bg-brand/10 p-4 text-sm text-brand">
+            <CheckCircle2 aria-hidden="true" className="mt-0.5 shrink-0" size={18} />
             {dictionary.form.success}
           </p>
         ) : null}
-        {status === "error" ? (
-          <p className="rounded border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 p-4 text-sm text-[var(--color-warning)]">
-            {dictionary.form.failure}
-          </p>
+        {showFallback ? (
+          <div className="rounded border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 p-4 text-sm text-[var(--color-warning)]">
+            <p>{status === "configuration" ? dictionary.form.missingEndpoint : dictionary.form.failure}</p>
+            <p className="mt-2">{dictionary.form.fallback}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {directEmail ? (
+                <a className="rounded border border-current px-3 py-2" href={`mailto:${directEmail}`}>
+                  {dictionary.common.directEmail}
+                </a>
+              ) : null}
+              {whatsappUrl ? (
+                <a className="rounded border border-current px-3 py-2" href={whatsappUrl} rel="noreferrer" target="_blank">
+                  {dictionary.common.whatsapp}
+                </a>
+              ) : null}
+            </div>
+            {!directEmail && !whatsappUrl ? (
+              <p className="mt-3">{dictionary.common.contactDetailsMissing}</p>
+            ) : null}
+          </div>
         ) : null}
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded bg-brand px-6 py-3 text-sm font-semibold uppercase text-[var(--color-brand-ink)] hover:bg-[var(--color-brand-hover)] disabled:cursor-not-allowed disabled:opacity-50 md:w-auto"
+        className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded bg-brand px-6 py-3 text-center text-sm font-semibold uppercase text-[var(--color-brand-ink)] hover:bg-[var(--color-brand-hover)] disabled:cursor-not-allowed disabled:opacity-50 md:w-auto"
       >
         {isSubmitting ? <LoaderCircle aria-hidden="true" className="animate-spin" size={18} /> : null}
-        {isSubmitting ? dictionary.form.sending : dictionary.form.submit}
+        {status === "success" ? dictionary.form.sent : isSubmitting ? dictionary.form.sending : dictionary.form.submit}
       </button>
     </form>
   );

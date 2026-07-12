@@ -29,7 +29,6 @@ export const navItems: NavItem[] = [
   { href: "/the-lamera", label: l("The Lamera", "La Lamera", "Der Lamera") },
   { href: "/team", label: l("Team", "Équipe", "Team") },
   { href: "/calendar", label: l("Calendar", "Calendrier", "Kalender") },
-  { href: "/results", label: l("Results", "Résultats", "Ergebnisse") },
 ];
 
 // Placeholder media is intentionally abstract. Replace only these paths when official team media is supplied.
@@ -40,24 +39,24 @@ export const heroMedia = {
 
 export const proofStats: ProofStat[] = [
   {
-    value: l("FIA ETCC", "FIA ETCC", "FIA ETCC"),
-    label: l("Champion 2014", "Champion 2014", "Champion 2014"),
-    needsValidation: true,
+    value: l("Private tests", "Essais privés", "Private Tests"),
+    label: l("Bespoke Lamera programmes", "Programmes Lamera sur mesure", "Individuelle Lamera-Programme"),
+    needsValidation: false,
   },
   {
-    value: l("26H Portimão", "26H Portimão", "26H Portimão"),
-    label: l("Pro-Am Winner 2023", "Victoire Pro-Am 2023", "Pro-Am-Sieg 2023"),
-    needsValidation: true,
+    value: l("Race weekends", "Week-ends course", "Rennwochenenden"),
+    label: l("Arrive-and-drive support", "Support arrive-and-drive", "Arrive-and-Drive-Betreuung"),
+    needsValidation: false,
   },
   {
-    value: l("15+ Years", "15+ ans", "15+ Jahre"),
-    label: l("Motorsport Experience", "d'expérience motorsport", "Motorsporterfahrung"),
-    needsValidation: true,
+    value: l("Driver coaching", "Coaching pilote", "Fahrercoaching"),
+    label: l("Engineering-led progression", "Progression guidée par la data", "Entwicklung mit Engineering"),
+    needsValidation: false,
   },
   {
     value: l("Luxembourg", "Luxembourg", "Luxemburg"),
-    label: l("European Racing Team", "équipe européenne", "europäisches Rennteam"),
-    needsValidation: true,
+    label: l("European racing base", "base racing européenne", "Europäische Racing-Basis"),
+    needsValidation: false,
   },
 ];
 
@@ -71,7 +70,7 @@ export const homeProgrammes: ProgrammeCardData[] = [
       "Entdecken Sie den Lamera, entwickeln Sie Sicherheit und arbeiten Sie direkt mit dem Team in einer professionellen Testumgebung.",
     ),
     cta: l("Plan Your Test", "Planifier votre essai", "Test planen"),
-    href: "/private-testing",
+    href: "/contact?objective=private-test&programme=private-test-day",
     image: {
       src: "/images/cars/lamera-front-three-quarter.webp",
       alt: l("Abstract motorsport media placeholder for private testing", "Visuel abstrait motorsport pour essai privé", "Abstraktes Motorsport-Platzhalterbild für private Tests"),
@@ -86,8 +85,8 @@ export const homeProgrammes: ProgrammeCardData[] = [
       "Rejoignez RaceTrack Competition pour un week-end endurance arrive-and-drive complet, de la préparation à l'assistance course.",
       "Fahren Sie mit RaceTrack Competition ein komplettes Arrive-and-Drive-Langstreckenwochenende, von Vorbereitung bis Rennbetreuung.",
     ),
-    cta: l("View Available Seats", "Voir les baquets", "Verfügbare Seats ansehen"),
-    href: "/race-with-us",
+    cta: l("Request this race seat", "Demander ce baquet", "Diesen Race Seat anfragen"),
+    href: "/contact?objective=race-weekend&programme=race-weekend",
     image: {
       src: "/images/team/team-garage.webp",
       alt: l("Abstract garage media placeholder", "Visuel abstrait d'ambiance garage", "Abstraktes Garagen-Platzhalterbild"),
@@ -103,7 +102,7 @@ export const homeProgrammes: ProgrammeCardData[] = [
       "Entwickeln Sie eine strukturierte Rennsaison mit Coaching, Engineering, technischer Unterstützung und langfristiger Fahrerentwicklung.",
     ),
     cta: l("Discuss Your Programme", "Discuter du programme", "Programm besprechen"),
-    href: "/contact",
+    href: "/contact?objective=full-season&programme=full-season",
     image: {
       src: "/images/cta/night-cockpit.webp",
       alt: l("Abstract night racing media placeholder", "Visuel abstrait de course de nuit", "Abstraktes Nacht-Rennsport-Platzhalterbild"),
@@ -172,7 +171,7 @@ export const teamMembers: TeamMember[] = [
     role: l("Official current role to be confirmed", "Rôle officiel actuel à confirmer", "Aktuelle offizielle Rolle zu bestätigen"),
     publicRole: l("Racing driver and sporting reference", "Pilote et référence sportive", "Rennfahrer und sportliche Referenz"),
     nationality: l("Luxembourg", "Luxembourg", "Luxemburg"),
-    biography: l("FIA ETCC champion, racing driver and central figure in RaceTrack Competition's sporting experience.", "Champion FIA ETCC, pilote et figure centrale de l'expérience sportive RaceTrack Competition.", "FIA-ETCC-Champion, Rennfahrer und zentrale Figur der sportlichen Erfahrung von RaceTrack Competition."),
+    biography: l("Luxembourg racing driver and central figure in RaceTrack Competition's sporting experience.", "Pilote luxembourgeois et figure centrale de l'expérience sportive RaceTrack Competition.", "Luxemburger Rennfahrer und zentrale Figur der sportlichen Erfahrung von RaceTrack Competition."),
     achievements: [l("FIA ETCC champion claim pending final wording validation.", "Titre FIA ETCC à valider dans sa formulation finale.", "FIA-ETCC-Titel in finaler Formulierung zu prüfen.")],
     languages: ["FR", "DE", "EN"],
     image: { src: "/images/drivers/gilles-bruckner.webp", alt: l("Abstract portrait placeholder for Gilles Bruckner", "Portrait abstrait provisoire de Gilles Bruckner", "Abstrakter Porträt-Platzhalter für Gilles Bruckner"), isPlaceholder: true },
@@ -269,7 +268,7 @@ export const privateTestingFaqs: FAQItem[] = [
   { question: l("How much track time will I receive?", "Combien de temps de piste ?", "Wie viel Streckenzeit erhalte ich?"), answer: l("Track time is defined in the final proposal according to circuit availability and the selected format.", "Le temps de piste est défini dans la proposition finale selon la disponibilité du circuit et le format.", "Streckenzeit wird im finalen Angebot je nach Strecke und Format definiert.") },
   { question: l("Can the programme be adapted to my level?", "Le programme est-il adapté à mon niveau ?", "Kann das Programm an mein Niveau angepasst werden?"), answer: l("Yes. Driver level, confidence and objective shape the run plan and coaching approach.", "Oui. Le niveau, la confiance et l'objectif guident le plan de roulage et le coaching.", "Ja. Niveau, Sicherheit und Ziel prägen Run-Plan und Coaching.") },
   { question: l("Can I test before committing to a race?", "Puis-je tester avant une course ?", "Kann ich vor einem Rennen testen?"), answer: l("That is one of the intended paths. A private test can help confirm comfort, pace and programme fit.", "C'est l'un des parcours prévus. Un essai privé peut confirmer aisance, rythme et adéquation.", "Das ist ein vorgesehener Weg. Ein privater Test kann Komfort, Tempo und Passung prüfen.") },
-  { question: l("Which circuits are available?", "Quels circuits sont disponibles ?", "Welche Strecken sind verfügbar?"), answer: l("The demo calendar lists sample circuits. Final availability must be confirmed with RaceTrack Competition.", "Le calendrier démo liste des exemples. La disponibilité finale doit être confirmée par RaceTrack Competition.", "Der Demo-Kalender zeigt Beispiele. Finale Verfügbarkeit muss RaceTrack Competition bestätigen.") },
+  { question: l("Which circuits are available?", "Quels circuits sont disponibles ?", "Welche Strecken sind verfügbar?"), answer: l("Private test dates and circuits are arranged directly with RaceTrack Competition according to availability, format and driver profile.", "Les dates et circuits d'essais privés sont organisés directement avec RaceTrack Competition selon disponibilité, format et profil pilote.", "Private Testtermine und Strecken werden direkt mit RaceTrack Competition nach Verfügbarkeit, Format und Fahrerprofil abgestimmt.") },
   { question: l("What happens in case of bad weather?", "Que se passe-t-il en cas de météo difficile ?", "Was passiert bei schlechtem Wetter?"), answer: l("Weather, safety and operating decisions depend on circuit rules and the team's risk assessment. Confirm conditions in the proposal.", "Météo, sécurité et décisions opérationnelles dépendent du règlement circuit et de l'évaluation de l'équipe. À confirmer dans la proposition.", "Wetter-, Sicherheits- und Ablaufentscheidungen hängen von Streckenregeln und Risikobewertung ab. Im Angebot bestätigen.") },
 ];
 
@@ -331,8 +330,10 @@ export const calendarEvents: CalendarEvent[] = circuits.map((circuit, index) => 
   type: index % 3 === 2 ? "race-weekend" : "private-testing",
   image: circuit.image,
   availability: circuit.availability,
-  cta: l("Request this opportunity", "Demander cette opportunité", "Diese Gelegenheit anfragen"),
-  href: circuit.href,
+  cta: index % 3 === 2
+    ? l("Request this race seat", "Demander ce baquet", "Diesen Race Seat anfragen")
+    : l("Enquire about this circuit", "Demander ce circuit", "Diese Strecke anfragen"),
+  href: `/contact?objective=${index % 3 === 2 ? "race-weekend" : "private-test"}&circuit=${circuit.id}`,
   isDemo: true,
 }));
 

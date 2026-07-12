@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import type { Dictionary } from "@/content/dictionaries";
 import { heroMedia } from "@/data/site";
-import { localizedPath, type Locale } from "@/lib/i18n";
+import { contactHref, localizedPath, type Locale } from "@/lib/i18n";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
 import { VideoBackground } from "@/components/VideoBackground";
@@ -13,37 +13,37 @@ type HeroProps = {
 
 export function Hero({ locale, dictionary }: HeroProps) {
   return (
-    <section className="relative min-h-[calc(100dvh-5rem)] overflow-hidden border-b border-white/10">
+    <section className="relative min-h-[min(760px,calc(100svh-72px))] overflow-hidden border-b border-white/10 md:min-h-[calc(100dvh-72px)]">
       <div className="absolute inset-0">
         <VideoBackground
           poster={heroMedia.poster}
           video={heroMedia.video}
           alt="Abstract motorsport hero placeholder for RaceTrack Competition"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,9,8,0.92),rgba(7,9,8,0.68)_45%,rgba(7,9,8,0.18))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,8,0.94),rgba(7,9,8,0.78)_48%,rgba(7,9,8,0.42))] md:bg-[linear-gradient(90deg,rgba(7,9,8,0.92),rgba(7,9,8,0.68)_45%,rgba(7,9,8,0.18))]" />
         <div className="absolute inset-0 technical-grid opacity-55" />
       </div>
 
-      <div className="page-shell relative z-10 flex min-h-[calc(100dvh-5rem)] items-center py-24">
+      <div className="page-shell relative z-10 flex min-h-[min(760px,calc(100svh-72px))] items-center py-14 sm:py-16 md:min-h-[calc(100dvh-72px)] md:py-20 lg:py-24">
         <Reveal className="max-w-4xl">
           <p className="mb-5 text-sm font-semibold uppercase text-brand">
             {dictionary.home.heroEyebrow}
           </p>
-          <h1 className="display-type max-w-4xl text-6xl uppercase md:text-8xl lg:text-9xl">
+          <h1 className="display-type max-w-4xl text-[clamp(2.65rem,10vw,8rem)] uppercase text-balance">
             {dictionary.home.heroTitle}
           </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-[color:var(--color-foreground)]/90 md:text-xl">
+          <p className="mt-6 max-w-2xl text-base leading-7 text-[color:var(--color-foreground)]/90 sm:text-lg md:text-xl md:leading-8">
             {dictionary.home.heroText}
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <CTAButton href={localizedPath(locale, "/contact")}>
+          <div className="mt-7 flex flex-col gap-3 min-[420px]:flex-row">
+            <CTAButton href={contactHref(locale, { objective: "private-test" })} className="w-full min-[420px]:w-auto">
               {dictionary.common.requestPrivateTest}
             </CTAButton>
-            <CTAButton href={localizedPath(locale, "/team")} variant="secondary">
+            <CTAButton href={localizedPath(locale, "/team")} variant="secondary" className="w-full min-[420px]:w-auto">
               {dictionary.common.exploreTeam}
             </CTAButton>
           </div>
-          <p className="mt-7 text-sm text-muted">{dictionary.common.based}</p>
+          <p className="mt-6 text-sm text-muted">{dictionary.home.finalCtaSmall}</p>
         </Reveal>
       </div>
 
