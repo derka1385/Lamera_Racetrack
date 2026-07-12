@@ -24,6 +24,9 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ServiceItem } from "@/components/ServiceItem";
 import { TeamMemberCard } from "@/components/TeamMemberCard";
+import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
+import { RaceDivider } from "@/components/race/RaceDivider";
+import { RaceSectionHeading } from "@/components/race/RaceSectionHeading";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -48,6 +51,7 @@ export default async function HomePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(locale)) }}
       />
       <Hero locale={locale} dictionary={dictionary} />
+      <RaceDivider variant="double-stripe" />
 
       <section className="border-b border-white/10 bg-black">
         <div className="page-shell grid divide-y divide-white/10 py-4 md:grid-cols-4 md:divide-x md:divide-y-0">
@@ -57,10 +61,11 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="py-24">
+      <section className="relative isolate overflow-hidden py-24">
+        <RaceBackdrop variant="garage" intensity="subtle" ghostText="PROGRAMMES" showGhostText />
         <div className="page-shell">
           <Reveal>
-            <SectionHeading title={dictionary.home.programmesTitle} text={dictionary.home.programmesText} />
+            <RaceSectionHeading title={dictionary.home.programmesTitle} text={dictionary.home.programmesText} index="02" variant="editorial" showSpeedLines />
           </Reveal>
           <div className="mt-12 grid gap-5 lg:grid-cols-3">
             {homeProgrammes.map((programme) => (
@@ -70,7 +75,8 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-surface py-24">
+      <section className="relative isolate overflow-hidden bg-surface py-24">
+        <RaceBackdrop variant="telemetry" intensity="subtle" ghostText="330 1020 6" showGhostText />
         <div className="page-shell grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <Reveal>
             <SectionHeading
@@ -104,6 +110,8 @@ export default async function HomePage({ params }: PageProps) {
             locale={locale}
             priority
             ratio="aspect-[4/3]"
+            variant="race"
+            overlay="speed"
           />
         </div>
       </section>
@@ -173,7 +181,7 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-28">
+      <section className="relative isolate overflow-hidden py-28">
         <div className="absolute inset-0">
           <MediaFrame
             image={{
@@ -187,10 +195,13 @@ export default async function HomePage({ params }: PageProps) {
             }}
             locale={locale}
             ratio="h-full"
+            variant="fullBleed"
+            overlay="strong"
             className="h-full rounded-none border-0 shadow-none"
           />
           <div className="absolute inset-0 bg-black/72" />
         </div>
+        <RaceBackdrop variant="night" intensity="medium" greenSide="both" showGhostText ghostText="DRIVE" className="z-0 bg-transparent" />
         <div className="page-shell relative z-10 max-w-3xl">
           <h2 className="display-type text-5xl uppercase md:text-7xl">{dictionary.home.finalCtaTitle}</h2>
           <p className="mt-5 text-xl leading-8 text-muted">{dictionary.home.finalCtaText}</p>

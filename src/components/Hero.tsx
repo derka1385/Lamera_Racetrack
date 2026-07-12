@@ -3,6 +3,7 @@ import type { Dictionary } from "@/content/dictionaries";
 import { heroMedia } from "@/data/site";
 import { contactHref, localizedPath, type Locale } from "@/lib/i18n";
 import { CTAButton } from "@/components/CTAButton";
+import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { VideoBackground } from "@/components/VideoBackground";
 
@@ -21,7 +22,15 @@ export function Hero({ locale, dictionary }: HeroProps) {
           alt="Abstract motorsport hero placeholder for RaceTrack Competition"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,8,0.94),rgba(7,9,8,0.78)_48%,rgba(7,9,8,0.42))] md:bg-[linear-gradient(90deg,rgba(7,9,8,0.92),rgba(7,9,8,0.68)_45%,rgba(7,9,8,0.18))]" />
-        <div className="absolute inset-0 technical-grid opacity-55" />
+        <RaceBackdrop
+          variant="speed"
+          intensity="hero"
+          greenSide="right"
+          showGhostText
+          ghostText="PRIVATE ENDURANCE"
+          sectionIndex="01"
+          className="z-0 bg-transparent"
+        />
       </div>
 
       <div className="page-shell relative z-10 flex min-h-[min(760px,calc(100svh-72px))] items-center py-14 sm:py-16 md:min-h-[calc(100dvh-72px)] md:py-20 lg:py-24">

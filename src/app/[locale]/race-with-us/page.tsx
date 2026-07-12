@@ -9,6 +9,9 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTAButton } from "@/components/CTAButton";
 import { ProcessStep } from "@/components/ProcessStep";
 import { SectionHeading } from "@/components/SectionHeading";
+import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
+import { RaceSectionHeading } from "@/components/race/RaceSectionHeading";
+import { SlantedPanel } from "@/components/race/SlantedPanel";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -26,22 +29,24 @@ export default async function RaceWithUsPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="bg-black py-16 md:py-24">
-        <div className="page-shell">
+      <section className="relative isolate overflow-hidden bg-black py-16 md:py-24">
+        <RaceBackdrop variant="speed" intensity="medium" ghostText="GRID" sectionIndex="01" showGhostText />
+        <div className="page-shell relative z-10">
           <Breadcrumbs locale={locale} items={[{ label: page.eyebrow }]} />
-          <SectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} />
+          <RaceSectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} index="01" showSpeedLines />
           <CTAButton href={contactHref(locale, { objective: "race-weekend" })} className="mt-8">{dictionary.common.requestDrive}</CTAButton>
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="relative isolate overflow-hidden py-20">
+        <RaceBackdrop variant="garage" intensity="subtle" ghostText="SERVICE" showGhostText />
         <div className="page-shell">
-          <SectionHeading title={page.fullServiceTitle} />
+          <RaceSectionHeading title={page.fullServiceTitle} index="02" variant="editorial" showSpeedLines />
           <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {fullServiceItems.map((item) => (
-              <div key={t(item, locale)} className="rounded border border-white/10 bg-surface p-5 text-muted">
+              <SlantedPanel key={t(item, locale)} innerClassName="p-5 text-muted">
                 {t(item, locale)}
-              </div>
+              </SlantedPanel>
             ))}
           </div>
         </div>
@@ -75,7 +80,7 @@ export default async function RaceWithUsPage({ params }: PageProps) {
             ))}
             </div>
           ) : (
-            <div className="mt-10 rounded border border-white/10 bg-black/25 p-6 md:p-8">
+            <div className="mt-10 border border-white/10 bg-black/25 p-6 md:p-8 cut-corner">
               <p className="max-w-2xl text-muted">{dictionary.common.seatsOnRequest}</p>
               <CTAButton href={contactHref(locale, { objective: "race-weekend" })} className="mt-6">
                 {dictionary.common.joinWaitingList}

@@ -155,6 +155,31 @@ export const dictionaries = {
         includedTitle: "What Can Be Included?",
         includedNote:
           "Every proposal is tailored. Inclusions depend on circuit, format, duration, licence status and the agreed support level.",
+        startingTitle: "Choose Your Starting Line",
+        startingIntro:
+          "Each programme is adapted to your experience, confidence and objective.",
+        programmesImpactTitle: "Four Ways to Take the Track",
+        programmesImpactIntro:
+          "Select a starting point. RaceTrack Competition then adjusts the format, support and rhythm around your profile.",
+        includedImpactTitle: "Everything Around the Driver.",
+        finalCtaTitle: "Your Next Lap Starts Here.",
+        finalCtaText:
+          "Tell us about your experience, your objectives and the circuit you have in mind. RaceTrack Competition will build a tailored programme.",
+        finalCta: "Build My Programme",
+        metaLine: "Luxembourg / Europe / Private Testing",
+        formatLabels: {
+          idealProfile: "Ideal profile",
+          duration: "Duration",
+          trackTime: "Track time",
+          coaching: "Coaching",
+          dataReview: "Data review",
+          equipment: "Equipment",
+        },
+        inclusionGroups: {
+          car: "Car",
+          performance: "Performance",
+          experience: "Experience",
+        },
       },
       raceWithUs: {
         eyebrow: "Race With Us",
@@ -388,6 +413,31 @@ export const dictionaries = {
         includedTitle: "Ce qui peut être inclus",
         includedNote:
           "Chaque proposition est personnalisée. Les inclusions dépendent du circuit, du format, de la durée, de la licence et du niveau d'assistance retenu.",
+        startingTitle: "Choisissez votre point de départ",
+        startingIntro:
+          "Chaque programme est adapté à votre expérience, votre confiance et votre objectif.",
+        programmesImpactTitle: "Quatre façons de prendre la piste",
+        programmesImpactIntro:
+          "Choisissez un point de départ. RaceTrack Competition ajuste ensuite le format, l'assistance et le rythme autour de votre profil.",
+        includedImpactTitle: "Tout autour du pilote.",
+        finalCtaTitle: "Votre prochain tour commence ici.",
+        finalCtaText:
+          "Parlez-nous de votre expérience, de vos objectifs et du circuit souhaité. RaceTrack Competition construira un programme adapté.",
+        finalCta: "Construire mon programme",
+        metaLine: "Luxembourg / Europe / Essais privés",
+        formatLabels: {
+          idealProfile: "Profil idéal",
+          duration: "Durée",
+          trackTime: "Temps de piste",
+          coaching: "Coaching",
+          dataReview: "Analyse des données",
+          equipment: "Équipement",
+        },
+        inclusionGroups: {
+          car: "Voiture",
+          performance: "Performance",
+          experience: "Expérience",
+        },
       },
       raceWithUs: {
         eyebrow: "Courir avec nous",
@@ -621,6 +671,31 @@ export const dictionaries = {
         includedTitle: "Was enthalten sein kann",
         includedNote:
           "Jedes Angebot ist individuell. Inhalte hängen von Strecke, Format, Dauer, Lizenzstatus und Betreuungsniveau ab.",
+        startingTitle: "Wählen Sie Ihren Ausgangspunkt",
+        startingIntro:
+          "Jedes Programm wird an Ihre Erfahrung, Sicherheit und Zielsetzung angepasst.",
+        programmesImpactTitle: "Vier Wege auf die Strecke",
+        programmesImpactIntro:
+          "Wählen Sie einen Ausgangspunkt. RaceTrack Competition passt Format, Betreuung und Ablauf an Ihr Profil an.",
+        includedImpactTitle: "Alles rund um den Fahrer.",
+        finalCtaTitle: "Ihre nächste Runde beginnt hier.",
+        finalCtaText:
+          "Erzählen Sie uns von Ihrer Erfahrung, Ihren Zielen und der gewünschten Strecke. RaceTrack Competition entwickelt ein passendes Programm.",
+        finalCta: "Mein Programm planen",
+        metaLine: "Luxemburg / Europa / Private Tests",
+        formatLabels: {
+          idealProfile: "Ideales Profil",
+          duration: "Dauer",
+          trackTime: "Fahrzeit",
+          coaching: "Coaching",
+          dataReview: "Datenanalyse",
+          equipment: "Ausrüstung",
+        },
+        inclusionGroups: {
+          car: "Auto",
+          performance: "Performance",
+          experience: "Erlebnis",
+        },
       },
       raceWithUs: {
         eyebrow: "Mitfahren",

@@ -6,7 +6,8 @@ import { isLocale, type Locale } from "@/lib/i18n";
 import { createMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CalendarFilters } from "@/components/CalendarFilters";
-import { SectionHeading } from "@/components/SectionHeading";
+import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
+import { RaceSectionHeading } from "@/components/race/RaceSectionHeading";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -24,12 +25,13 @@ export default async function CalendarPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="bg-black py-16 md:py-24">
-        <div className="page-shell">
+      <section className="relative isolate overflow-hidden bg-black py-16 md:py-24">
+        <RaceBackdrop variant="track" intensity="hero" ghostText="CALENDAR" sectionIndex="01" showGhostText />
+        <div className="page-shell relative z-10">
           <Breadcrumbs locale={locale} items={[{ label: page.eyebrow }]} />
-          <SectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} />
+          <RaceSectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} index="01" showSpeedLines />
           {hasConfirmedEvents ? (
-            <a href="/calendar.ics" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded border border-white/10 bg-white/5 px-4 text-sm font-semibold hover:border-brand">
+            <a href="/calendar.ics" className="mt-8 inline-flex min-h-11 items-center gap-2 border border-white/10 bg-white/5 px-4 text-sm font-semibold hover:border-brand cut-corner">
               <CalendarDays aria-hidden="true" size={18} />
               {page.export}
             </a>
