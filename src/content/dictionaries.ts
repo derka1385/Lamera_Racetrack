@@ -144,6 +144,21 @@ export const dictionaries = {
       finalCtaText:
         "Tell us where you are today. We will build the programme that takes you to the next level.",
       finalCtaSmall: "Private enquiries. Personal response. Bespoke programmes.",
+      gatewayTitle: "Start with the right door.",
+      gatewayText:
+        "Two clear paths, then a tailored programme. Choose discovery and development, or step directly into a race-weekend conversation.",
+      privatePathTitle: "Private testing",
+      privatePathText:
+        "A controlled introduction to the Lamera, with briefing, coaching, track time and honest debrief.",
+      racePathTitle: "Race with us",
+      racePathText:
+        "Join a complete endurance operation with car, crew, engineering and weekend support around you.",
+      methodTitle: "From first call to first stint.",
+      methodText:
+        "The homepage stays simple: we understand your level, shape the format, prepare the car, then review your progression.",
+      focusTitle: "One car. One team. One controlled experience.",
+      focusText:
+        "The Lamera is the anchor of the offer. RaceTrack Competition builds the support around the driver, not the other way around.",
     },
     pages: {
       privateTesting: {
@@ -402,6 +417,21 @@ export const dictionaries = {
       finalCtaText:
         "Dites-nous où vous en êtes aujourd'hui. Nous construirons le programme qui vous fera progresser.",
       finalCtaSmall: "Demandes privées. Réponse personnelle. Programmes sur mesure.",
+      gatewayTitle: "Commencez par la bonne entrée.",
+      gatewayText:
+        "Deux parcours clairs, puis un programme adapté. Choisissez découverte et progression, ou ouvrez directement une discussion week-end de course.",
+      privatePathTitle: "Essais privés",
+      privatePathText:
+        "Une introduction maîtrisée à la Lamera, avec briefing, coaching, temps de piste et débriefing honnête.",
+      racePathTitle: "Courir avec nous",
+      racePathText:
+        "Intégrez une opération endurance complète avec voiture, équipe, ingénierie et assistance autour de vous.",
+      methodTitle: "Du premier échange au premier relais.",
+      methodText:
+        "La page d'accueil reste simple : comprendre votre niveau, définir le format, préparer la voiture, puis analyser votre progression.",
+      focusTitle: "Une voiture. Une équipe. Une expérience maîtrisée.",
+      focusText:
+        "La Lamera est le point d'ancrage de l'offre. RaceTrack Competition construit l'accompagnement autour du pilote, pas l'inverse.",
     },
     pages: {
       privateTesting: {
@@ -660,6 +690,21 @@ export const dictionaries = {
       finalCtaText:
         "Sagen Sie uns, wo Sie heute stehen. Wir entwickeln das Programm, das Sie auf das nächste Niveau bringt.",
       finalCtaSmall: "Private Anfragen. Persönliche Antwort. Individuelle Programme.",
+      gatewayTitle: "Starten Sie mit dem richtigen Einstieg.",
+      gatewayText:
+        "Zwei klare Wege, danach ein angepasstes Programm. Wählen Sie Entwicklung im privaten Test oder das direkte Gespräch zum Rennwochenende.",
+      privatePathTitle: "Private Tests",
+      privatePathText:
+        "Ein kontrollierter Einstieg in den Lamera mit Briefing, Coaching, Streckenzeit und ehrlichem Debrief.",
+      racePathTitle: "Mitfahren",
+      racePathText:
+        "Teil einer kompletten Langstreckenoperation mit Auto, Crew, Engineering und Betreuung werden.",
+      methodTitle: "Vom ersten Gespräch zum ersten Stint.",
+      methodText:
+        "Die Startseite bleibt einfach: Niveau verstehen, Format festlegen, Auto vorbereiten und Entwicklung auswerten.",
+      focusTitle: "Ein Auto. Ein Team. Ein kontrolliertes Erlebnis.",
+      focusText:
+        "Der Lamera ist der Mittelpunkt des Angebots. RaceTrack Competition baut die Betreuung um den Fahrer herum auf.",
     },
     pages: {
       privateTesting: {

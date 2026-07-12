@@ -1,32 +1,18 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { getDictionary } from "@/content/dictionaries";
-import {
-  carImages,
-  carSpecifications,
-  circuits,
-  homeProgrammes,
-  processSteps,
-  proofStats,
-  services,
-  teamMembers,
-} from "@/data/site";
+import { carImages, carSpecifications, processSteps, proofStats } from "@/data/site";
 import { contactHref, isLocale, localizedPath, t, type Locale } from "@/lib/i18n";
 import { createMetadata, organizationJsonLd } from "@/lib/seo";
-import { CarSpecification } from "@/components/CarSpecification";
 import { CTAButton } from "@/components/CTAButton";
 import { Hero } from "@/components/Hero";
 import { MediaFrame } from "@/components/MediaFrame";
-import { ProcessStep } from "@/components/ProcessStep";
-import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { ProofStat } from "@/components/ProofStat";
-import { Reveal } from "@/components/Reveal";
-import { SectionHeading } from "@/components/SectionHeading";
-import { ServiceItem } from "@/components/ServiceItem";
-import { TeamMemberCard } from "@/components/TeamMemberCard";
 import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
 import { RaceDivider } from "@/components/race/RaceDivider";
+import { RaceMetaBar } from "@/components/race/RaceMetaBar";
 import { RaceSectionHeading } from "@/components/race/RaceSectionHeading";
+import { SlantedPanel } from "@/components/race/SlantedPanel";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -41,7 +27,8 @@ export default async function HomePage({ params }: PageProps) {
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : "en";
   const dictionary = getDictionary(locale);
-  const publicCircuits = circuits.filter((circuit) => !circuit.isDemo).slice(0, 3);
+  const primarySpecs = carSpecifications.slice(0, 3);
+  const methodSteps = processSteps.slice(0, 4);
 
   return (
     <>
@@ -53,50 +40,81 @@ export default async function HomePage({ params }: PageProps) {
       <Hero locale={locale} dictionary={dictionary} />
       <RaceDivider variant="double-stripe" />
 
-      <section className="border-b border-white/10 bg-black">
-        <div className="page-shell grid divide-y divide-white/10 py-4 md:grid-cols-4 md:divide-x md:divide-y-0">
+      <section className="relative isolate overflow-hidden bg-[var(--rtc-black)] py-6">
+        <RaceBackdrop variant="minimal" intensity="subtle" showGrid={false} showStreaks={false} showRacingLine={false} showNoise />
+        <div className="page-shell relative z-10 grid divide-y divide-white/10 border-y border-white/10 md:grid-cols-4 md:divide-x md:divide-y-0">
           {proofStats.map((stat) => (
             <ProofStat key={t(stat.label, locale)} stat={stat} locale={locale} />
           ))}
         </div>
       </section>
 
-      <section className="relative isolate overflow-hidden py-24">
-        <RaceBackdrop variant="garage" intensity="subtle" ghostText="PROGRAMMES" showGhostText />
-        <div className="page-shell">
-          <Reveal>
-            <RaceSectionHeading title={dictionary.home.programmesTitle} text={dictionary.home.programmesText} index="02" variant="editorial" showSpeedLines />
-          </Reveal>
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {homeProgrammes.map((programme) => (
-              <ProgrammeCard key={programme.id} programme={programme} locale={locale} />
-            ))}
+      <section className="relative isolate overflow-hidden py-20 md:py-28">
+        <RaceBackdrop variant="garage" intensity="subtle" ghostText="START" sectionIndex="02" showGhostText />
+        <div className="page-shell relative z-10">
+          <RaceSectionHeading
+            title={dictionary.home.gatewayTitle}
+            text={dictionary.home.gatewayText}
+            index="02"
+            variant="editorial"
+            showSpeedLines
+          />
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            <SlantedPanel className="min-h-[22rem]" innerClassName="flex h-full flex-col p-6 md:p-8">
+              <p className="race-meta text-[var(--rtc-green)]">01 / PRIVATE</p>
+              <h2 className="mt-5 font-display text-5xl font-extrabold uppercase italic leading-none md:text-7xl">
+                {dictionary.home.privatePathTitle}
+              </h2>
+              <p className="race-body mt-6 max-w-xl">{dictionary.home.privatePathText}</p>
+              <div className="mt-auto pt-8">
+                <CTAButton href={localizedPath(locale, "/private-testing")}>
+                  {dictionary.common.requestPrivateTest}
+                </CTAButton>
+              </div>
+            </SlantedPanel>
+
+            <SlantedPanel className="min-h-[22rem] bg-[var(--rtc-white)] text-[var(--rtc-black)]" innerClassName="flex h-full flex-col p-6 md:p-8">
+              <p className="race-meta text-[var(--rtc-green-dark)]">02 / ENDURANCE</p>
+              <h2 className="mt-5 font-display text-5xl font-extrabold uppercase italic leading-none text-[var(--rtc-black)] md:text-7xl">
+                {dictionary.home.racePathTitle}
+              </h2>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-black/68">{dictionary.home.racePathText}</p>
+              <div className="mt-auto pt-8">
+                <CTAButton href={localizedPath(locale, "/race-with-us")} variant="secondary">
+                  {dictionary.common.requestRaceSeat}
+                </CTAButton>
+              </div>
+            </SlantedPanel>
           </div>
         </div>
       </section>
 
       <section className="relative isolate overflow-hidden bg-surface py-24">
         <RaceBackdrop variant="telemetry" intensity="subtle" ghostText="330 1020 6" showGhostText />
-        <div className="page-shell grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <Reveal>
-            <SectionHeading
+        <div className="page-shell relative z-10 grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div>
+            <RaceSectionHeading
               eyebrow={dictionary.home.lameraTitle}
-              title="330 HP / 1,020 KG"
-              text={dictionary.home.lameraText}
+              title={dictionary.home.focusTitle}
+              text={dictionary.home.focusText}
+              index="03"
+              variant="editorial"
+              showSpeedLines
             />
-            <div className="mt-8 grid grid-cols-2 gap-3">
-              {carSpecifications.slice(0, 4).map((spec) => (
-                <CarSpecification
-                  key={`${t(spec.label, locale)}-${t(spec.value, locale)}`}
-                  spec={spec}
-                  locale={locale}
-                />
+            <div className="mt-9 grid gap-3 sm:grid-cols-3">
+              {primarySpecs.map((spec) => (
+                <div key={`${t(spec.label, locale)}-${t(spec.value, locale)}`} className="border border-white/10 bg-black/24 p-4">
+                  <p className="race-label">{t(spec.label, locale)}</p>
+                  <p className="mt-3 font-display text-3xl font-bold uppercase text-[var(--rtc-white)]">
+                    {t(spec.value, locale)}
+                  </p>
+                </div>
               ))}
             </div>
             <CTAButton href={localizedPath(locale, "/the-lamera")} className="mt-8">
               {dictionary.common.discoverLamera}
             </CTAButton>
-          </Reveal>
+          </div>
           <MediaFrame
             image={{
               src: carImages[0],
@@ -116,68 +134,33 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="py-24">
-        <div className="page-shell">
-          <SectionHeading title={dictionary.home.supportTitle} text={dictionary.home.supportText} />
-          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((item) => (
-              <ServiceItem key={`${item.icon}-${t(item.title, locale)}`} item={item} locale={locale} />
-            ))}
-          </div>
-          <CTAButton href={contactHref(locale, { objective: "full-season" })} className="mt-10">
-            {dictionary.common.buildProgramme}
-          </CTAButton>
-        </div>
-      </section>
-
-      <section className="bg-black py-24">
-        <div className="page-shell">
-          <SectionHeading title={dictionary.home.processTitle} text={dictionary.home.processText} />
-          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {processSteps.map((step) => (
-              <ProcessStep key={step.step} step={step} locale={locale} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24">
-        <div className="page-shell">
-          <SectionHeading title={dictionary.home.circuitsTitle} text={dictionary.home.circuitsText} />
-          {publicCircuits.length ? (
-            <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {publicCircuits.map((circuit) => (
-                <article key={circuit.id} className="rounded border border-white/10 bg-surface p-6">
-                  <h3 className="font-display text-3xl font-semibold uppercase">{circuit.circuit}</h3>
-                  <p className="mt-3 text-muted">{t(circuit.country, locale)}</p>
-                  <CTAButton href={contactHref(locale, { objective: "private-test", circuit: circuit.id })} variant="ghost" className="mt-5 justify-start px-0">
-                    {dictionary.common.enquireAboutCircuit}
-                  </CTAButton>
-                </article>
+      <section className="relative isolate overflow-hidden py-20 md:py-28">
+        <RaceBackdrop variant="track" intensity="medium" ghostText="PROCESS" sectionIndex="04" showGhostText />
+        <div className="page-shell relative z-10">
+          <div className="grid gap-10 lg:grid-cols-[0.45fr_0.55fr] lg:items-start">
+            <RaceSectionHeading
+              title={dictionary.home.methodTitle}
+              text={dictionary.home.methodText}
+              index="04"
+              variant="editorial"
+              showSpeedLines
+            />
+            <div className="grid gap-0 border-y border-white/10">
+              {methodSteps.map((step) => (
+                <div key={step.step} className="grid gap-4 border-b border-white/10 py-5 last:border-b-0 sm:grid-cols-[5rem_1fr]">
+                  <p className="font-display text-5xl font-extrabold italic leading-none text-[var(--rtc-green)]">{step.step}</p>
+                  <div>
+                    <h3 className="font-display text-3xl font-bold uppercase">{t(step.title, locale)}</h3>
+                    <p className="mt-2 leading-7 text-muted">{t(step.copy, locale)}</p>
+                  </div>
+                </div>
               ))}
             </div>
-          ) : (
-            <div className="mt-12 rounded border border-white/10 bg-surface p-6 md:p-8">
-              <p className="max-w-2xl text-lg text-muted">{dictionary.common.privateDatesOnRequest}</p>
-              <CTAButton href={contactHref(locale, { objective: "private-test" })} className="mt-6">
-                {dictionary.common.discussPreferredCircuit}
-              </CTAButton>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="bg-surface py-24">
-        <div className="page-shell">
-          <SectionHeading title={dictionary.home.teamTitle} text={dictionary.home.teamText} />
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {teamMembers.slice(0, 3).map((member) => (
-              <TeamMemberCard key={member.id} member={member} locale={locale} />
-            ))}
           </div>
-          <CTAButton href={localizedPath(locale, "/team")} className="mt-10">
-            {dictionary.common.meetTeam}
-          </CTAButton>
+          <RaceMetaBar
+            className="mt-12"
+            items={[dictionary.common.based, dictionary.common.privateDatesOnRequest, dictionary.common.seatsOnRequest]}
+          />
         </div>
       </section>
 
@@ -202,13 +185,20 @@ export default async function HomePage({ params }: PageProps) {
           <div className="absolute inset-0 bg-black/72" />
         </div>
         <RaceBackdrop variant="night" intensity="medium" greenSide="both" showGhostText ghostText="DRIVE" className="z-0 bg-transparent" />
-        <div className="page-shell relative z-10 max-w-3xl">
-          <h2 className="display-type text-5xl uppercase md:text-7xl">{dictionary.home.finalCtaTitle}</h2>
-          <p className="mt-5 text-xl leading-8 text-muted">{dictionary.home.finalCtaText}</p>
-          <CTAButton href={contactHref(locale, { objective: "full-season" })} className="mt-8">
-            {dictionary.common.confidentialCall}
-          </CTAButton>
-          <p className="mt-5 text-sm text-muted">{dictionary.home.finalCtaSmall}</p>
+        <div className="page-shell relative z-10">
+          <div className="max-w-3xl">
+            <h2 className="race-display text-[var(--rtc-white)]">{dictionary.home.finalCtaTitle}</h2>
+            <p className="race-body mt-6">{dictionary.home.finalCtaText}</p>
+            <div className="mt-8 flex flex-col gap-3 min-[420px]:flex-row">
+              <CTAButton href={contactHref(locale, { objective: "private-test" })}>
+                {dictionary.common.requestPrivateTest}
+              </CTAButton>
+              <CTAButton href={contactHref(locale, { objective: "race-weekend" })} variant="secondary">
+                {dictionary.common.requestDrive}
+              </CTAButton>
+            </div>
+            <p className="mt-5 text-sm text-muted">{dictionary.home.finalCtaSmall}</p>
+          </div>
         </div>
       </section>
     </>

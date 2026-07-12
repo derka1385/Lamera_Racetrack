@@ -48,8 +48,8 @@ export function Hero({ locale, dictionary }: HeroProps) {
             <CTAButton href={contactHref(locale, { objective: "private-test" })} className="w-full min-[420px]:w-auto">
               {dictionary.common.requestPrivateTest}
             </CTAButton>
-            <CTAButton href={localizedPath(locale, "/team")} variant="secondary" className="w-full min-[420px]:w-auto">
-              {dictionary.common.exploreTeam}
+            <CTAButton href={localizedPath(locale, "/race-with-us")} variant="secondary" className="w-full min-[420px]:w-auto">
+              {dictionary.common.requestRaceSeat}
             </CTAButton>
           </div>
           <p className="mt-6 text-sm text-muted">{dictionary.home.finalCtaSmall}</p>
