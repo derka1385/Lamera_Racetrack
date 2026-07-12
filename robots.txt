@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://derka1385.github.io/Lamera_Racetrack/sitemap.xml
