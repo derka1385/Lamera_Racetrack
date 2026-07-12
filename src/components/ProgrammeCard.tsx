@@ -10,11 +10,13 @@ type ProgrammeCardProps = {
 
 export function ProgrammeCard({ programme, locale }: ProgrammeCardProps) {
   return (
-    <article className="group grid overflow-hidden rounded border border-white/10 bg-surface transition hover:border-brand/50 md:grid-rows-[auto_1fr]">
+    <article className="group grid overflow-hidden border border-white/10 bg-surface transition hover:-translate-y-1 hover:border-brand/50 md:grid-rows-[auto_1fr] cut-corner">
       <MediaFrame
         image={programme.image}
         locale={locale}
         ratio="aspect-[4/3]"
+        variant="race"
+        overlay="speed"
         className="rounded-none border-0 shadow-none transition duration-300 group-hover:scale-[1.01]"
       />
       <div className="flex flex-col p-6">

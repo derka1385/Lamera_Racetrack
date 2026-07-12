@@ -7,6 +7,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CarSpecification } from "@/components/CarSpecification";
 import { MediaFrame } from "@/components/MediaFrame";
 import { SectionHeading } from "@/components/SectionHeading";
+import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
+import { RaceSectionHeading } from "@/components/race/RaceSectionHeading";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -49,10 +51,11 @@ export default async function LameraPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="bg-black py-16 md:py-24">
-        <div className="page-shell">
+      <section className="relative isolate overflow-hidden bg-black py-16 md:py-24">
+        <RaceBackdrop variant="telemetry" intensity="medium" ghostText="330 1020 6" sectionIndex="01" showGhostText />
+        <div className="page-shell relative z-10">
           <Breadcrumbs locale={locale} items={[{ label: page.eyebrow }]} />
-          <SectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} />
+          <RaceSectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} index="01" showSpeedLines />
         </div>
       </section>
 
@@ -72,6 +75,8 @@ export default async function LameraPage({ params }: PageProps) {
               }}
               locale={locale}
               ratio={index === 0 ? "aspect-[16/9] md:col-span-2" : "aspect-[4/3]"}
+              variant={index === 0 ? "race" : "cutCorner"}
+              overlay="speed"
             />
           ))}
         </div>
@@ -95,7 +100,7 @@ export default async function LameraPage({ params }: PageProps) {
       <section className="py-20">
         <div className="page-shell grid gap-8 lg:grid-cols-3">
           {detailBlocks.map((item) => (
-            <article key={t(item.title, locale)} className="rounded border border-white/10 bg-surface p-6">
+            <article key={t(item.title, locale)} className="border border-white/10 bg-surface p-6 cut-corner">
               <h2 className="font-display text-3xl font-semibold uppercase">{t(item.title, locale)}</h2>
               <p className="mt-4 leading-7 text-muted">
                 {t(item.copy, locale)}

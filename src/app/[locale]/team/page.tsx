@@ -6,6 +6,8 @@ import { createMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TeamMemberCard } from "@/components/TeamMemberCard";
+import { RaceBackdrop } from "@/components/motion/RaceBackdrop";
+import { RaceSectionHeading } from "@/components/race/RaceSectionHeading";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -22,10 +24,11 @@ export default async function TeamPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="bg-black py-16 md:py-24">
-        <div className="page-shell">
+      <section className="relative isolate overflow-hidden bg-black py-16 md:py-24">
+        <RaceBackdrop variant="garage" intensity="subtle" ghostText="TEAM" sectionIndex="01" showGhostText />
+        <div className="page-shell relative z-10">
           <Breadcrumbs locale={locale} items={[{ label: page.eyebrow }]} />
-          <SectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} />
+          <RaceSectionHeading className="mt-10" eyebrow={page.eyebrow} title={page.title} text={page.intro} index="01" variant="editorial" showSpeedLines />
         </div>
       </section>
 
@@ -42,7 +45,7 @@ export default async function TeamPage({ params }: PageProps) {
           <SectionHeading title={page.identityTitle} text="Luxembourg, Germany and France sit naturally in the team's operating context, with programmes designed for European circuits and international drivers." />
           <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {["Luxembourg", "Germany", "France", "European racing programme"].map((item) => (
-              <div key={item} className="rounded border border-white/10 bg-black/25 p-5 text-muted">{item}</div>
+              <div key={item} className="border border-white/10 bg-black/25 p-5 text-muted cut-corner">{item}</div>
             ))}
           </div>
         </div>

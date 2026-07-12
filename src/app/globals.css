@@ -1,6 +1,26 @@
 @import "tailwindcss";
 
 :root {
+  --rtc-black: #050605;
+  --rtc-black-soft: #090b09;
+  --rtc-graphite: #101310;
+  --rtc-panel: #151915;
+  --rtc-panel-light: #1c211c;
+  --rtc-white: #f4f5f0;
+  --rtc-silver: #c9ccc6;
+  --rtc-metal: #878d87;
+  --rtc-muted: #a2a8a2;
+  --rtc-green: #40cf45;
+  --rtc-green-acid: #72e000;
+  --rtc-green-dark: #153d18;
+  --rtc-green-glow: rgb(78 220 55 / 0.22);
+  --rtc-line: rgb(255 255 255 / 0.10);
+  --rtc-line-strong: rgb(255 255 255 / 0.20);
+  --rtc-skew: -8deg;
+  --rtc-section-angle: 4vw;
+  --rtc-motion-fast: 280ms;
+  --rtc-motion-normal: 650ms;
+  --rtc-motion-slow: 18s;
   --color-background: #070908;
   --color-surface: #101311;
   --color-surface-elevated: #171a18;
@@ -48,6 +68,7 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
   letter-spacing: 0;
+  overflow-x: clip;
 }
 
 body::selection {
@@ -97,6 +118,87 @@ textarea {
   letter-spacing: 0;
 }
 
+.race-display,
+.race-display-xl {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0;
+  line-height: 0.86;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.race-display {
+  font-size: clamp(2.6rem, 6vw, 6.5rem);
+}
+
+.race-display-xl {
+  font-size: clamp(3.4rem, 9vw, 9rem);
+}
+
+.race-eyebrow,
+.race-meta,
+.race-label {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.race-eyebrow {
+  color: var(--rtc-green);
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+}
+
+.race-meta {
+  color: var(--rtc-silver);
+  font-size: clamp(0.68rem, 1vw, 0.82rem);
+}
+
+.race-label {
+  color: var(--rtc-metal);
+  font-size: 0.72rem;
+}
+
+.race-index {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(8rem, 22vw, 22rem);
+  font-style: italic;
+  font-weight: 800;
+  line-height: 0.78;
+  letter-spacing: 0;
+}
+
+.race-body {
+  color: var(--rtc-muted);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.65;
+}
+
+.cut-corner {
+  clip-path: polygon(0 0, calc(100% - 1.1rem) 0, 100% 1.1rem, 100% 100%, 1.1rem 100%, 0 calc(100% - 1.1rem));
+}
+
+.race-panel {
+  position: relative;
+  border: 1px solid var(--rtc-line);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.06), transparent 38%),
+    linear-gradient(180deg, var(--rtc-panel), var(--rtc-black-soft));
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.32);
+}
+
+.race-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 4px;
+  height: 42%;
+  background: var(--rtc-green);
+  box-shadow: 0 0 26px var(--rtc-green-glow);
+}
+
 .technical-grid {
   background-image:
     linear-gradient(rgb(244 245 241 / 0.035) 1px, transparent 1px),
@@ -112,9 +214,64 @@ textarea {
   padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
 }
 
+@keyframes rtc-grid-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-34px, 22px, 0);
+  }
+}
+
+@keyframes rtc-streak-drift {
+  from {
+    transform: translate3d(0, 0, 0) skewX(-18deg);
+  }
+  to {
+    transform: translate3d(-70px, 0, 0) skewX(-18deg);
+  }
+}
+
+@keyframes rtc-line-draw {
+  from {
+    stroke-dashoffset: 820;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rtc-light-sweep {
+  from {
+    transform: translate3d(-120%, 0, 0) skewX(-18deg);
+  }
+  to {
+    transform: translate3d(220%, 0, 0) skewX(-18deg);
+  }
+}
+
+@keyframes rtc-section-wipe {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (min-width: 768px) {
   .safe-bottom {
     padding-bottom: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .race-display-xl {
+    line-height: 0.9;
+  }
+
+  .cut-corner {
+    clip-path: polygon(0 0, calc(100% - 0.8rem) 0, 100% 0.8rem, 100% 100%, 0.8rem 100%, 0 calc(100% - 0.8rem));
   }
 }
 
